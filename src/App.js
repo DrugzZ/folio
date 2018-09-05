@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { media } from "./utility/mediaQuery.js";
 import mainImg from "./assets/img/header_main_img.jpg";
 import logoAlpaca from "./assets/img/logo_alpaca.png";
 import styled, { injectGlobal } from "styled-components";
@@ -11,12 +12,20 @@ const colors = {
   orange: "#fbbc61"
 };
 
+const fonts = {
+  serif: `Constantia, "Lucida Bright", Lucidabright, "Lucida Serif",
+  Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",
+  Georgia, serif;`,
+  base: `-apple-system, system-ui, BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;`
+};
+
 injectGlobal`
-  ${styledNormalize}
+  ${styledNormalize};
 
   html {
     box-sizing: border-box;
-    font-size: 16px;
+    font-smoothing: antialiased;
+	  text-rendering: optimizeLegibility;
   }
   
   *, *:before, *:after {
@@ -25,14 +34,27 @@ injectGlobal`
 
   body {
     background-color: ${colors.bgColor};
+    font-size: 100%;
   }
   
   body, h1, h2, h3, h4, h5, h6, p, ol, ul {
-    color: ${colors.darkPurple}
-    font-family: -apple-system, system-ui, BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    color: ${colors.darkPurple};
+    font-family: ${fonts.base};
     font-weight: normal;
     margin: 0;
     padding: 0;
+  }
+
+  h1 {
+    font-family: ${fonts.serif}
+    font-weight: 600;
+    font-size: 3em;
+    letter-spacing: 0.5rem;
+    line-height: 1.05;
+    ${media.tablet`
+      font-size: 2em;
+      line-height: 1.25;
+    `};
   }
   
   ol, ul {
@@ -61,19 +83,19 @@ const Header = styled.div`
 const Logo = styled.div`
   flex-basis: 8%;
   margin-top: 2rem;
-  min-width: 80px;
+  min-width: 5rem;
 `;
 
 const Social = styled.div`
   display: flex;
   flex-direction: column;
-  letter-spacing: 0.15rem;
+  letter-spacing: 0.1rem;
   > :nth-child(1) {
-    border-right: 2px solid ${colors.darkPurple};
+    border-right: 2px solid ${colors.orange};
     padding: 1rem 1rem 0.5rem 1rem;
   }
   > :nth-child(2) {
-    border-right: 2px solid ${colors.darkPurple};
+    border-right: 2px solid ${colors.orange};
     padding: 0.5rem 1rem 1rem 1rem;
   }
   margin-top: 2rem;
@@ -86,6 +108,7 @@ const Main = styled.div`
 const HomeContent = styled.div`
   display: flex;
   height: 100%;
+  min-height: 75vh;
   justify-content: center;
 `;
 
@@ -99,25 +122,20 @@ const ColorBlock = styled.div`
   height: 70vh;
 `;
 
-const HeroText = styled.div`
+const HeroTextContainer = styled.div`
   position: absolute;
   top: 10%;
-  line-height: 1.5;
   margin-left: -85%;
-  > h1 {
-    font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif",
-      Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",
-      Georgia, serif;
-    font-size: 3rem;
-    font-weight: 600;
-    margin: 0;
-    letter-spacing: 0.5rem;
+  ${media.phone`
+      margin: 0;
+      top:0;
+  `} > p {
+    letter-spacing: 0.1rem;
   }
-  > p {
-    font-weight: 400;
-    margin: 0;
-    letter-spacing: 0.15rem;
-  }
+`;
+
+const HeroText = styled.h1`
+  line-height: 1.5;
 `;
 
 const ImgContainer = styled.div`
@@ -125,24 +143,61 @@ const ImgContainer = styled.div`
   flex-basis: 30%;
   margin-left: 15%;
   margin-top: 5%;
+  ${media.phone`
+      margin: 0;
+  `};
 `;
 
 const Footer = styled.div`
   align-items: flex-end;
+  justify-content: space-between;
   display: flex;
   grid-column: span 12;
   margin-bottom: 2rem;
   position: relative;
 `;
 
-const DecorText = styled.div`
+const DecorText = styled.p`
+  transform: rotate(-90deg);
+  transform-origin: left top 0;
+  white-space: nowrap;
+  letter-spacing: 0.1rem;
+  line-height: 0;
+  position: relative;
+  &:before {
+    content: "";
+    width: 5rem;
+    border-bottom: solid 2px ${colors.orange};
+    position: absolute;
+    left: 10rem;
+  }
+`;
+
+const Pagination = styled.div`
   display: flex;
-  flex-direction: column;
+  font-size: 1.5rem;
+  letter-spacing: 0.2rem;
+  position: relative;
   > span {
-    transform: rotate(-90deg);
-    transform-origin: left top 0;
-    letter-spacing: 0.15rem;
-    line-height: 0;
+    border-bottom: 2px solid ${colors.orange};
+    left: 1.8rem;
+    position: absolute;
+    transform: rotate(-75deg) translateX(-1.2rem);
+    width: 3rem;
+  }
+`;
+
+const CurrentPosition = styled.p`
+  > :last-child {
+    font-size: 2rem;
+  }
+  position: relative;
+`;
+
+const TotalCount = styled.p`
+  margin-left: 1.5rem;
+  > :last-child {
+    font-size: 2rem;
   }
 `;
 
@@ -163,20 +218,29 @@ class App extends Component {
           <ColorBlock />
           <HomeContent>
             <ImgContainer>
-              <HeroText>
-                <h1>
+              <HeroTextContainer>
+                <HeroText>
                   a Collection <br /> of works
-                </h1>
+                </HeroText>
                 <p>(Very original, modern, professional)</p>
-              </HeroText>
+              </HeroTextContainer>
               <img src={mainImg} alt="fancy" />
             </ImgContainer>
           </HomeContent>
         </Main>
         <Footer>
-          <DecorText>
-            <span>Design in mind.</span>
-          </DecorText>
+          <DecorText>Design in mind.</DecorText>
+          <Pagination>
+            <CurrentPosition>
+              <span>0</span>
+              <span>1</span>
+            </CurrentPosition>
+            <span />
+            <TotalCount>
+              <span>0</span>
+              <span>4</span>
+            </TotalCount>
+          </Pagination>
         </Footer>
       </Wrapper>
     );
