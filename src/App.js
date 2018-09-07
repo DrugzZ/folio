@@ -69,9 +69,15 @@ injectGlobal`
 
 const Wrapper = styled.div`
   display: grid;
+  height: 100vh;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 15vh 75vh 10vh;
-  padding: 0 2rem;
+  grid-template-rows: auto 1fr auto;
+  padding: 2rem;
+  row-gap: 2rem;
+  ${media.phone`
+    padding: 1rem;
+    row-gap: 1rem;
+  `};
 `;
 
 const Header = styled.div`
@@ -82,7 +88,6 @@ const Header = styled.div`
 
 const Logo = styled.div`
   flex-basis: 8%;
-  margin-top: 2rem;
   min-width: 5rem;
 `;
 
@@ -97,8 +102,6 @@ const Social = styled.div`
   > :nth-child(2) {
     border-right: 2px solid ${colors.orange};
     padding: 0.5rem 1rem 1rem 1rem;
-  }
-  margin-top: 2rem;
 `;
 
 const Main = styled.div`
@@ -107,8 +110,6 @@ const Main = styled.div`
 
 const HomeContent = styled.div`
   display: flex;
-  height: 100%;
-  min-height: 75vh;
   justify-content: center;
 `;
 
@@ -120,14 +121,17 @@ const ColorBlock = styled.div`
   background-color: ${colors.darkPurple};
   width: 45%;
   height: 70vh;
+  ${media.phone`
+      display: none;
+  `};
 `;
 
 const HeroTextContainer = styled.div`
   position: absolute;
   top: 10%;
-  margin-left: -85%;
+  margin-left: -75%;
   ${media.phone`
-      margin: 0;
+      margin:0;
       top:0;
   `} > p {
     letter-spacing: 0.1rem;
@@ -136,25 +140,23 @@ const HeroTextContainer = styled.div`
 
 const HeroText = styled.h1`
   line-height: 1.5;
+  white-space: nowrap;
 `;
 
 const ImgContainer = styled.div`
-  position: relative;
-  flex-basis: 30%;
   margin-left: 15%;
-  margin-top: 5%;
-  ${media.phone`
-      margin: 0;
+  position: relative;
+  width: 33.3% ${media.phone`
+      width: auto;
+      margin:0;
   `};
 `;
 
 const Footer = styled.div`
   align-items: flex-end;
-  justify-content: space-between;
   display: flex;
   grid-column: span 12;
-  margin-bottom: 2rem;
-  position: relative;
+  justify-content: space-between;
 `;
 
 const DecorText = styled.p`
