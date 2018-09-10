@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { media } from "./utility/mediaQuery.js";
 import mainImg from "./assets/img/header_main_img.jpg";
 import logoAlpaca from "./assets/img/logo_alpaca.png";
+import ArrowSVG from "./assets/img/baseline-chevron_right-24px.svg";
 import styled, { injectGlobal } from "styled-components";
 import styledNormalize from "styled-normalize";
 
 const colors = {
-  grey: "#f3f3f3",
-  darkerGrey: "#f7f7f7",
+  grey: "#f7f7f7",
+  darkerGrey: "#efefef",
   darkPurple: "#3d3852",
   orange: "#fbbc61"
 };
@@ -33,7 +34,7 @@ injectGlobal`
   }
 
   body {
-    background-color: ${colors.bgColor};
+    background-color: ${colors.grey};
     font-size: 100%;
   }
   
@@ -51,6 +52,10 @@ injectGlobal`
     font-size: 4em;
     letter-spacing: 0.5rem;
     line-height: 1.05;
+    ${media.desktop`
+      font-size: 3em;
+      line-height: 1.25;
+    `};
     ${media.tablet`
       font-size: 2em;
       line-height: 1.25;
@@ -74,7 +79,7 @@ const Wrapper = styled.div`
   height: 100vh;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: 15% 65% auto;
-  row-gap: 2rem;
+  row-gap: 5%;
   ${media.phone`
     row-gap: 1rem;
   `};
@@ -90,6 +95,13 @@ const Header = styled.div`
 `;
 
 const Logo = styled.img``;
+
+const Navigation = styled.div`
+  display: flex;
+  flex-basis: 40%;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 const Main = styled.div`
   grid-column: span 12;
@@ -109,11 +121,28 @@ const ColorBlock = styled.div`
   background-color: ${colors.darkPurple};
   display: flex;
   align-items: center;
+  width: 40%;
   min-width: 40%;
   height: 100%;
   ${media.phone`
       display: none;
   `};
+`;
+
+const ProjectsNav = styled.div`
+  align-self: flex-end;
+  display: flex;
+  background-color: ${colors.grey};
+`;
+
+const Arrow = styled.div`
+  transform: ${props => (props.left ? "rotate(180deg)" : "")};
+  width: 4rem;
+  height: 4rem;
+  background: center / 50% no-repeat url(${ArrowSVG});
+  &:hover {
+    background-color: ${colors.darkerGrey};
+  }
 `;
 
 const HeroTextContainer = styled.div`
@@ -132,7 +161,7 @@ const HeroText = styled.h1`
 `;
 
 const ImageContainer = styled.div`
-  height: 70%;
+  height: 80%;
   margin-left: -30%;
   ${media.phone`
     width: auto;
@@ -153,13 +182,13 @@ const Footer = styled.div`
 
 const DecorText = styled.p`
   position: relative;
-  line-height: 0;
   &:before {
     content: "";
     width: 5rem;
     border-bottom: solid 2px ${colors.orange};
     position: absolute;
-    left: 10rem;
+    left: 12rem;
+    top: 50%;
   }
 `;
 
@@ -197,6 +226,11 @@ class App extends Component {
       <Wrapper>
         <Header>
           <Logo src={logoAlpaca} alt="Beautiful Alpaca" />
+          <Navigation>
+            <p>Projects</p>
+            <p>A Propo</p>
+            <p>Contacts</p>
+          </Navigation>
         </Header>
         <Main>
           <HomeContent>
@@ -210,11 +244,15 @@ class App extends Component {
               <ImageContainer>
                 <HeroImage src={mainImg} alt="fancy" />
               </ImageContainer>
+              <ProjectsNav>
+                <Arrow left />
+                <Arrow />
+              </ProjectsNav>
             </ColorBlock>
           </HomeContent>
         </Main>
         <Footer>
-          <DecorText>Design in mind.</DecorText>
+          <DecorText>Performance in mind.</DecorText>
           <Pagination>
             <CurrentPosition>
               <span>0</span>
