@@ -48,7 +48,7 @@ injectGlobal`
   h1 {
     font-family: ${fonts.serif}
     font-weight: 600;
-    font-size: 3em;
+    font-size: 4em;
     letter-spacing: 0.5rem;
     line-height: 1.05;
     ${media.tablet`
@@ -73,10 +73,9 @@ const Wrapper = styled.div`
   display: grid;
   height: 100vh;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 15% 70% auto;
+  grid-template-rows: 15% 65% auto;
   row-gap: 2rem;
   ${media.phone`
-    padding: 1rem;
     row-gap: 1rem;
   `};
 `;
@@ -85,53 +84,40 @@ const Header = styled.div`
   grid-column: span 12;
   display: flex;
   justify-content: space-between;
-  padding: 2rem 2rem 0 2rem;
+  padding-top: 2rem;
+  width: calc(100% - 2 * 8vw);
+  margin: 0 8vw;
 `;
 
 const Logo = styled.img``;
-
-const Social = styled.div`
-  display: flex;
-  flex-direction: column;
-  letter-spacing: 0.1rem;
-  > :nth-child(1) {
-    border-right: 2px solid ${colors.orange};
-    padding: 1rem 1rem 0.5rem 1rem;
-  }
-  > :nth-child(2) {
-    border-right: 2px solid ${colors.orange};
-    padding: 0.5rem 1rem 1rem 1rem;
-`;
 
 const Main = styled.div`
   grid-column: span 12;
 `;
 
 const HomeContent = styled.div`
-  position: relative;
+  align-items: center;
+  position: relative
   display: flex;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-between;
+  width: calc(100% - 2 * 8vw);
+  margin: 0 8vw
   height: 100%;
 `;
 
 const ColorBlock = styled.div`
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  right: 10%;
   background-color: ${colors.darkPurple};
-  width: 35vw;
-  height: 70vh;
+  display: flex;
+  align-items: center;
+  min-width: 40%;
+  height: 100%;
   ${media.phone`
       display: none;
   `};
 `;
 
 const HeroTextContainer = styled.div`
-  position: absolute;
-  top: 10%;
-  margin-left: -10%;
+  z-index: 2;
   ${media.phone`
       margin:0;
       top:0;
@@ -145,30 +131,29 @@ const HeroText = styled.h1`
   white-space: nowrap;
 `;
 
-const HeroImage = styled.img`
-  margin-left: 15%;
-  position: relative;
+const ImageContainer = styled.div`
+  height: 70%;
+  margin-left: -30%;
   ${media.phone`
-      width: auto;
-      margin:0;
-  `};
+    width: auto;
+    margin:0;
+`};
 `;
+const HeroImage = styled.img``;
 
 const Footer = styled.div`
   align-items: flex-end;
   display: flex;
   grid-column: span 12;
   justify-content: space-between;
-  padding: 0 2rem 2rem 2rem;
+  padding-bottom: 2rem;
+  width: calc(100% - 2 * 8vw);
+  margin: 0 8vw;
 `;
 
 const DecorText = styled.p`
-  transform: rotate(-90deg);
-  transform-origin: left top 0;
-  white-space: nowrap;
-  letter-spacing: 0.1rem;
-  line-height: 0;
   position: relative;
+  line-height: 0;
   &:before {
     content: "";
     width: 5rem;
@@ -212,21 +197,20 @@ class App extends Component {
       <Wrapper>
         <Header>
           <Logo src={logoAlpaca} alt="Beautiful Alpaca" />
-          <Social>
-            <span>fb</span>
-            <span>ig</span>
-          </Social>
         </Header>
         <Main>
-          <ColorBlock />
           <HomeContent>
-            <HeroImage src={mainImg} alt="fancy" />
             <HeroTextContainer>
               <HeroText>
                 a Collection <br /> of works
               </HeroText>
               <p>(Very original, modern, professional)</p>
             </HeroTextContainer>
+            <ColorBlock>
+              <ImageContainer>
+                <HeroImage src={mainImg} alt="fancy" />
+              </ImageContainer>
+            </ColorBlock>
           </HomeContent>
         </Main>
         <Footer>
