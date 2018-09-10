@@ -62,8 +62,10 @@ injectGlobal`
   }
   
   img {
+    width: auto;
     max-width: 100%;
     height: auto;
+    max-height: 100%;
   }
 `;
 
@@ -71,8 +73,7 @@ const Wrapper = styled.div`
   display: grid;
   height: 100vh;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto 1fr auto;
-  padding: 2rem;
+  grid-template-rows: 15% 70% auto;
   row-gap: 2rem;
   ${media.phone`
     padding: 1rem;
@@ -84,12 +85,10 @@ const Header = styled.div`
   grid-column: span 12;
   display: flex;
   justify-content: space-between;
+  padding: 2rem 2rem 0 2rem;
 `;
 
-const Logo = styled.div`
-  flex-basis: 8%;
-  min-width: 5rem;
-`;
+const Logo = styled.img``;
 
 const Social = styled.div`
   display: flex;
@@ -109,8 +108,11 @@ const Main = styled.div`
 `;
 
 const HomeContent = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
 const ColorBlock = styled.div`
@@ -119,7 +121,7 @@ const ColorBlock = styled.div`
   top: 0;
   right: 10%;
   background-color: ${colors.darkPurple};
-  width: 45%;
+  width: 35vw;
   height: 70vh;
   ${media.phone`
       display: none;
@@ -129,7 +131,7 @@ const ColorBlock = styled.div`
 const HeroTextContainer = styled.div`
   position: absolute;
   top: 10%;
-  margin-left: -75%;
+  margin-left: -10%;
   ${media.phone`
       margin:0;
       top:0;
@@ -143,10 +145,10 @@ const HeroText = styled.h1`
   white-space: nowrap;
 `;
 
-const ImgContainer = styled.div`
+const HeroImage = styled.img`
   margin-left: 15%;
   position: relative;
-  width: 33.3% ${media.phone`
+  ${media.phone`
       width: auto;
       margin:0;
   `};
@@ -157,6 +159,7 @@ const Footer = styled.div`
   display: flex;
   grid-column: span 12;
   justify-content: space-between;
+  padding: 0 2rem 2rem 2rem;
 `;
 
 const DecorText = styled.p`
@@ -208,9 +211,7 @@ class App extends Component {
     return (
       <Wrapper>
         <Header>
-          <Logo>
-            <img src={logoAlpaca} alt="Beautiful Alpaca" />
-          </Logo>
+          <Logo src={logoAlpaca} alt="Beautiful Alpaca" />
           <Social>
             <span>fb</span>
             <span>ig</span>
@@ -219,15 +220,13 @@ class App extends Component {
         <Main>
           <ColorBlock />
           <HomeContent>
-            <ImgContainer>
-              <HeroTextContainer>
-                <HeroText>
-                  a Collection <br /> of works
-                </HeroText>
-                <p>(Very original, modern, professional)</p>
-              </HeroTextContainer>
-              <img src={mainImg} alt="fancy" />
-            </ImgContainer>
+            <HeroImage src={mainImg} alt="fancy" />
+            <HeroTextContainer>
+              <HeroText>
+                a Collection <br /> of works
+              </HeroText>
+              <p>(Very original, modern, professional)</p>
+            </HeroTextContainer>
           </HomeContent>
         </Main>
         <Footer>
