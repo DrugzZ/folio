@@ -120,6 +120,7 @@ const HomeContent = styled.div`
 const ColorBlock = styled.div`
   background-color: ${colors.darkPurple};
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 40%;
   min-width: 40%;
@@ -228,8 +229,8 @@ class App extends Component {
           <Logo src={logoAlpaca} alt="Beautiful Alpaca" />
           <Navigation>
             <p>Projects</p>
-            <p>A Propo</p>
-            <p>Contacts</p>
+            <p>à Propos</p>
+            <p>Connect</p>
           </Navigation>
         </Header>
         <Main>
