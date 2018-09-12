@@ -6,6 +6,8 @@ import ArrowSVG from "./assets/img/baseline-chevron_right-24px.svg";
 import styled, { injectGlobal } from "styled-components";
 import styledNormalize from "styled-normalize";
 
+import ContentSlider from "./ContentSlider";
+
 const colors = {
   grey: "#f7f7f7",
   darkerGrey: "#efefef",
@@ -34,7 +36,7 @@ injectGlobal`
   }
 
   body {
-    background-color: ${colors.grey};
+    background-color: #fff;
     font-size: 100%;
   }
   
@@ -222,6 +224,14 @@ const TotalCount = styled.p`
 `;
 
 class App extends Component {
+  handleScroll = event => {
+    if (event.nativeEvent.wheelDelta > 0) {
+      console.log("scroll up");
+    } else {
+      console.log("scroll down");
+    }
+  };
+
   render() {
     return (
       <Wrapper>
@@ -234,7 +244,7 @@ class App extends Component {
           </Navigation>
         </Header>
         <Main>
-          <HomeContent>
+          <HomeContent onWheel={this.handleScroll}>
             <HeroTextContainer>
               <HeroText>
                 a Collection <br /> of works
@@ -266,6 +276,7 @@ class App extends Component {
             </TotalCount>
           </Pagination>
         </Footer>
+        <ContentSlider />
       </Wrapper>
     );
   }
