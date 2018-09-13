@@ -224,14 +224,6 @@ const TotalCount = styled.p`
 `;
 
 class App extends Component {
-  handleScroll = event => {
-    if (event.nativeEvent.wheelDelta > 0) {
-      console.log("scroll up");
-    } else {
-      console.log("scroll down");
-    }
-  };
-
   render() {
     return (
       <Wrapper>
@@ -244,7 +236,8 @@ class App extends Component {
           </Navigation>
         </Header>
         <Main>
-          <HomeContent onWheel={this.handleScroll}>
+          <HomeContent>
+            <ContentSlider />
             <HeroTextContainer>
               <HeroText>
                 a Collection <br /> of works
@@ -276,7 +269,6 @@ class App extends Component {
             </TotalCount>
           </Pagination>
         </Footer>
-        <ContentSlider />
       </Wrapper>
     );
   }
