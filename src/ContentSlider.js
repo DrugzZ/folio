@@ -4,6 +4,7 @@ import posed from "react-pose";
 
 const BoxCont = styled.div`
   position: relative;
+  display: none;
 `;
 
 const Animated = posed.div({
@@ -28,7 +29,7 @@ export default class ContentSlider extends Component {
     this.state = {
       current: 1,
       slides: ["red", "blue", "green", "black"],
-      isVisible: true
+      isVisible: false
     };
   }
 
