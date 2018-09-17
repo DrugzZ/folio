@@ -98,7 +98,7 @@ const ImageContainer = styled(posed.div(AnimatedImage))`
 `;
 const HeroImage = styled.img``;
 
-export default ({ isVisible, slide }) => {
+export default ({ slide }) => {
   return (
     <HomeContent>
       <HeroTextContainer key="Text">

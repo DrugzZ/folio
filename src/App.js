@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { media, colors, fonts } from "./utility/utility.js";
 import styled, { injectGlobal } from "styled-components";
 import styledNormalize from "styled-normalize";
+import debounce from "lodash.debounce";
 
 import Header from "./Header.js";
 import HomeContent from "./HomeContent.js";
@@ -91,14 +92,20 @@ class App extends Component {
       currentSlideIndex: 0,
       slides: data
     };
+    this.handleScroll = this.handleScroll.bind(this);
+    this.debouncedScroll = debounce(this.debouncedScroll.bind(this), 300);
   }
 
   componentDidMount() {
     this.setState({ isVisible: true });
   }
 
-  handleScroll = event => {
-    if (event.nativeEvent.wheelDelta > 0) {
+  handleScroll(event) {
+    this.debouncedScroll(event.nativeEvent.wheelDelta);
+  }
+
+  debouncedScroll(event) {
+    if (event > 0) {
       let nextSlide =
         (this.state.currentSlideIndex + 1) % this.state.slides.length;
       this.setState({
@@ -112,7 +119,7 @@ class App extends Component {
         currentSlideIndex: prevSlide
       });
     }
-  };
+  }
 
   render() {
     const filteredSlide = this.state.slides.find(
@@ -123,10 +130,7 @@ class App extends Component {
         <Header isVisible={this.state.isVisible} />
         <PoseGroup animateOnMount>
           <Main onWheel={this.handleScroll} key={this.state.currentSlideIndex}>
-            <HomeContent
-              isVisible={this.state.isVisible}
-              slide={filteredSlide}
-            />
+            <HomeContent slide={filteredSlide} />
           </Main>
         </PoseGroup>
         <Footer
