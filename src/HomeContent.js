@@ -4,7 +4,37 @@ import ArrowSVG from "./assets/img/baseline-chevron_right-24px.svg";
 import styled from "styled-components";
 import posed from "react-pose";
 
-const HomeContent = styled.div`
+const AnimatedBlock = {
+  enter: {
+    x: 0,
+    opacity: 1,
+    delay: 700
+  },
+  exit: {
+    x: -100,
+    opacity: 0,
+    delay: 300
+  }
+};
+
+const AnimatedImage = {
+  enter: {
+    x: 0,
+    opacity: 1,
+    delay: 1000
+  },
+  exit: {
+    x: -50,
+    opacity: 0
+  }
+};
+
+const AnimatedText = {
+  enter: { y: 0, opacity: 1, delay: 1200 },
+  exit: { y: 50, opacity: 0, delay: 600 }
+};
+
+const HomeContent = styled(posed.div())`
   align-items: center;
   position: relative
   display: flex;
@@ -14,33 +44,7 @@ const HomeContent = styled.div`
   height: 100%;
 `;
 
-const Animated = {
-  hidden: {
-    opacity: 0,
-    x: props => (props.moving ? -50 : "")
-  },
-  visible: {
-    opacity: 1,
-    x: props => (props.moving ? 0 : ""),
-    delay: props => (props.parent ? 100 : ""),
-    delayChildren: props => (props.parent ? 300 : "")
-  }
-};
-
-const AnimatedText = {
-  hidden: {
-    opacity: 0,
-    y: 50
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    delay: 500,
-    staggerChildren: 50
-  }
-};
-
-const ColorBlock = styled(posed.div(Animated))`
+const ColorBlock = styled(posed.div(AnimatedBlock))`
   background-color: ${colors.darkPurple};
   display: flex;
   justify-content: space-between;
@@ -84,7 +88,7 @@ const HeroText = styled.h1`
   white-space: nowrap;
 `;
 
-const ImageContainer = styled(posed.div(Animated))`
+const ImageContainer = styled(posed.div(AnimatedImage))`
   height: 80%;
   margin-left: -30%;
   ${media.phone`
@@ -97,7 +101,7 @@ const HeroImage = styled.img``;
 export default ({ isVisible, slide }) => {
   return (
     <HomeContent>
-      <HeroTextContainer pose={isVisible ? "visible" : "hidden"}>
+      <HeroTextContainer key="Text">
         <HeroText>
           {slide.text}
           <br />
@@ -105,8 +109,8 @@ export default ({ isVisible, slide }) => {
         </HeroText>
         <p>{slide.helper}</p>
       </HeroTextContainer>
-      <ColorBlock parent moving pose={isVisible ? "visible" : "hidden"}>
-        <ImageContainer moving pose={isVisible ? "visible" : "hidden"}>
+      <ColorBlock key="Block">
+        <ImageContainer key="Image">
           <HeroImage src={slide.image} alt="fancy" />
         </ImageContainer>
         <ProjectsNav>

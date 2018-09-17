@@ -8,6 +8,7 @@ import HomeContent from "./HomeContent.js";
 import Footer from "./Footer.js";
 
 import data from "./projectSeed.js";
+import posed, { PoseGroup } from "react-pose";
 
 injectGlobal`
   ${styledNormalize};
@@ -78,7 +79,7 @@ const Wrapper = styled.div`
   `};
 `;
 
-const Main = styled.div`
+const Main = styled(posed.div())`
   grid-column: span 12;
 `;
 
@@ -120,9 +121,14 @@ class App extends Component {
     return (
       <Wrapper>
         <Header isVisible={this.state.isVisible} />
-        <Main onWheel={this.handleScroll}>
-          <HomeContent isVisible={this.state.isVisible} slide={filteredSlide} />
-        </Main>
+        <PoseGroup animateOnMount>
+          <Main onWheel={this.handleScroll} key={this.state.currentSlideIndex}>
+            <HomeContent
+              isVisible={this.state.isVisible}
+              slide={filteredSlide}
+            />
+          </Main>
+        </PoseGroup>
         <Footer
           isVisible={this.state.isVisible}
           currentSlide={this.state.currentSlideIndex}
