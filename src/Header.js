@@ -4,7 +4,7 @@ import posed from "react-pose";
 
 import logoAlpaca from "./assets/img/logo_alpaca.png";
 
-const Animated = posed.div({
+const Animated = {
   hidden: {
     opacity: 0,
     x: props => (props.moving ? -50 : "")
@@ -15,9 +15,9 @@ const Animated = posed.div({
     delay: props => (props.parent ? 100 : ""),
     delayChildren: props => (props.parent ? 300 : "")
   }
-});
+};
 
-const Header = styled(Animated)`
+const Header = styled(posed.div(Animated))`
   grid-column: span 12;
   display: flex;
   justify-content: space-between;
@@ -28,7 +28,7 @@ const Header = styled(Animated)`
 
 const Logo = styled.img``;
 
-const Navigation = styled(Animated)`
+const Navigation = styled(posed.div(Animated))`
   display: flex;
   flex-basis: 40%;
   align-items: center;

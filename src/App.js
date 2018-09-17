@@ -7,7 +7,7 @@ import Header from "./Header.js";
 import HomeContent from "./HomeContent.js";
 import Footer from "./Footer.js";
 
-import ContentSlider from "./ContentSlider";
+import data from "./projectSeed.js";
 
 injectGlobal`
   ${styledNormalize};
@@ -85,21 +85,49 @@ const Main = styled.div`
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isVisible: false };
+    this.state = {
+      isVisible: false,
+      currentSlideIndex: 0,
+      slides: data
+    };
   }
 
   componentDidMount() {
     this.setState({ isVisible: true });
   }
 
+  handleScroll = event => {
+    if (event.nativeEvent.wheelDelta > 0) {
+      let nextSlide =
+        (this.state.currentSlideIndex + 1) % this.state.slides.length;
+      this.setState({
+        currentSlideIndex: nextSlide
+      });
+    } else {
+      let prevSlide =
+        (this.state.slides.length + this.state.currentSlideIndex - 1) %
+        this.state.slides.length;
+      this.setState({
+        currentSlideIndex: prevSlide
+      });
+    }
+  };
+
   render() {
+    const filteredSlide = this.state.slides.find(
+      (slide, index) => (index === this.state.currentSlideIndex ? slide : null)
+    );
     return (
       <Wrapper>
         <Header isVisible={this.state.isVisible} />
-        <Main>
-          <HomeContent isVisible={this.state.isVisible} />
+        <Main onWheel={this.handleScroll}>
+          <HomeContent isVisible={this.state.isVisible} slide={filteredSlide} />
         </Main>
-        <Footer isVisible={this.state.isVisible} />
+        <Footer
+          isVisible={this.state.isVisible}
+          currentSlide={this.state.currentSlideIndex}
+          totalSlides={this.state.slides.length}
+        />
       </Wrapper>
     );
   }

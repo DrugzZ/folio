@@ -66,18 +66,18 @@ const TotalCount = styled.p`
   }
 `;
 
-export default ({ isVisible }) => (
+export default ({ isVisible, currentSlide, totalSlides }) => (
   <Footer pose={isVisible ? "visible" : "hidden"}>
     <DecorText>Performance in mind.</DecorText>
     <Pagination>
       <CurrentPosition>
         <span>0</span>
-        <span>1</span>
+        <span>{currentSlide + 1}</span>
       </CurrentPosition>
       <span />
       <TotalCount>
         <span>0</span>
-        <span>4</span>
+        <span>{totalSlides}</span>
       </TotalCount>
     </Pagination>
   </Footer>
