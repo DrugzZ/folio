@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import posed from "react-pose";
+import { NavLink } from "react-router-dom";
 
 import logoAlpaca from "./assets/img/logo_alpaca.png";
 
@@ -35,12 +36,14 @@ const Navigation = styled(posed.div(Animated))`
   justify-content: space-around;
 `;
 
+const Link = styled(NavLink)``;
+
 export default ({ isVisible }) => (
   <Header pose={isVisible ? "visible" : "hidden"}>
     <Logo src={logoAlpaca} alt="Beautiful Alpaca" />
     <Navigation>
-      <p>Projects</p>
-      <p>à Propos</p>
+      <Link to="/">Projects</Link>
+      <Link to="/about">à Propos</Link>
     </Navigation>
   </Header>
 );

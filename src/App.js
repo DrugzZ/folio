@@ -7,6 +7,8 @@ import debounce from "lodash.debounce";
 import Header from "./Header.js";
 import HomeContent from "./HomeContent.js";
 import Footer from "./Footer.js";
+import AboutContent from "./AboutContent.js";
+import { Route, Switch } from "react-router-dom";
 
 import data from "./projectSeed.js";
 import posed, { PoseGroup } from "react-pose";
@@ -29,7 +31,7 @@ injectGlobal`
     font-size: 100%;
   }
   
-  body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  body, h1, h2, h3, h4, h5, h6, p, a, ol, ul {
     color: ${colors.darkPurple};
     font-family: ${fonts.base};
     font-weight: normal;
@@ -37,8 +39,9 @@ injectGlobal`
     padding: 0;
   }
 
-  p{
+  p, a{
     letter-spacing: 0.08rem;
+    text-decoration: none;
   }
 
   h1 {
@@ -93,7 +96,7 @@ class App extends Component {
       slides: data
     };
     this.handleScroll = this.handleScroll.bind(this);
-    this.debouncedScroll = debounce(this.debouncedScroll.bind(this), 300);
+    this.debouncedScroll = debounce(this.debouncedScroll.bind(this), 200);
   }
 
   componentDidMount() {
@@ -107,14 +110,15 @@ class App extends Component {
   debouncedScroll(event) {
     if (event > 0) {
       let nextSlide =
-        (this.state.currentSlideIndex + 1) % this.state.slides.length;
+        (this.state.slides.length + this.state.currentSlideIndex - 1) %
+        this.state.slides.length;
+
       this.setState({
         currentSlideIndex: nextSlide
       });
     } else {
       let prevSlide =
-        (this.state.slides.length + this.state.currentSlideIndex - 1) %
-        this.state.slides.length;
+        (this.state.currentSlideIndex + 1) % this.state.slides.length;
       this.setState({
         currentSlideIndex: prevSlide
       });
@@ -126,19 +130,36 @@ class App extends Component {
       (slide, index) => (index === this.state.currentSlideIndex ? slide : null)
     );
     return (
-      <Wrapper>
-        <Header isVisible={this.state.isVisible} />
-        <PoseGroup animateOnMount>
-          <Main onWheel={this.handleScroll} key={this.state.currentSlideIndex}>
-            <HomeContent slide={filteredSlide} />
-          </Main>
-        </PoseGroup>
-        <Footer
-          isVisible={this.state.isVisible}
-          currentSlide={this.state.currentSlideIndex}
-          totalSlides={this.state.slides.length}
-        />
-      </Wrapper>
+      <Route
+        render={({ location }) => (
+          <Wrapper>
+            <Header isVisible={this.state.isVisible} />
+            <PoseGroup animateOnMount>
+              <Main
+                onWheel={location.pathname === "/" ? this.handleScroll : null}
+                key={this.state.currentSlideIndex + location.key}
+              >
+                <Switch location={location}>
+                  <Route
+                    exact
+                    path="/"
+                    key="Home"
+                    render={props => (
+                      <HomeContent slide={filteredSlide} {...props} />
+                    )}
+                  />
+                  <Route path="/about" key="About" component={AboutContent} />
+                </Switch>
+              </Main>
+            </PoseGroup>
+            <Footer
+              isVisible={this.state.isVisible}
+              currentSlide={this.state.currentSlideIndex}
+              totalSlides={this.state.slides.length}
+            />
+          </Wrapper>
+        )}
+      />
     );
   }
 }

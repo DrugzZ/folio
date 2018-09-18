@@ -10,5 +10,11 @@ export default [
     text2: "goshko",
     helper: "This is the second slide",
     image: require("./assets/img/logo_alpaca.png")
+  },
+  {
+    text: "Third slide",
+    text2: "toshko",
+    helper: "This is the third slide",
+    image: require("./assets/img/header_main_img.jpg")
   }
 ];
