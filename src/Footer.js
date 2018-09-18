@@ -3,20 +3,16 @@ import styled from "styled-components";
 import posed from "react-pose";
 import { colors } from "./utility/utility.js";
 
-const Animated = posed.div({
+const Animated = {
   hidden: {
-    opacity: 0,
-    x: props => (props.moving ? -50 : "")
+    opacity: 0
   },
   visible: {
-    opacity: 1,
-    x: props => (props.moving ? 0 : ""),
-    delay: props => (props.parent ? 100 : ""),
-    delayChildren: props => (props.parent ? 300 : "")
+    opacity: 1
   }
-});
+};
 
-const Footer = styled(Animated)`
+const Footer = styled(posed.div(Animated))`
   align-items: flex-end;
   display: flex;
   grid-column: span 12;
@@ -26,7 +22,7 @@ const Footer = styled(Animated)`
   margin: 0 8vw;
 `;
 
-const DecorText = styled.p`
+const DecorText = styled(posed.p(Animated))`
   position: relative;
   &:before {
     content: "";
@@ -38,16 +34,17 @@ const DecorText = styled.p`
   }
 `;
 
-const Pagination = styled.div`
+const Pagination = styled(posed.div(Animated))`
   display: flex;
+  justify-content: space-between;
   font-size: 1.5rem;
-  letter-spacing: 0.2rem;
   position: relative;
-  > span {
-    border-bottom: 2px solid ${colors.orange};
-    left: 1.8rem;
-    position: absolute;
-    transform: rotate(-75deg) translateX(-1.2rem);
+  > div {
+    height: 100%;
+    margin: auto;
+    border-top: 2px solid ${colors.orange};
+    transform: rotate(-75deg);
+    transform-origin: center;
     width: 3rem;
   }
 `;
@@ -56,25 +53,25 @@ const CurrentPosition = styled.p`
   > :last-child {
     font-size: 2rem;
   }
-  position: relative;
 `;
 
 const TotalCount = styled.p`
-  margin-left: 1.5rem;
   > :last-child {
     font-size: 2rem;
   }
 `;
 
-export default ({ isVisible, currentSlide, totalSlides }) => (
-  <Footer pose={isVisible ? "visible" : "hidden"}>
-    <DecorText>Performance in mind.</DecorText>
-    <Pagination>
+export default ({ isVisible, currentSlide, totalSlides, location }) => (
+  <Footer>
+    <DecorText pose={isVisible ? "visible" : "hidden"}>
+      Performance in mind.
+    </DecorText>
+    <Pagination pose={isVisible && location === "/" ? "visible" : "hidden"}>
       <CurrentPosition>
         <span>0</span>
         <span>{currentSlide + 1}</span>
       </CurrentPosition>
-      <span />
+      <div />
       <TotalCount>
         <span>0</span>
         <span>{totalSlides}</span>

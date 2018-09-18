@@ -7,14 +7,10 @@ import logoAlpaca from "./assets/img/logo_alpaca.png";
 
 const Animated = {
   hidden: {
-    opacity: 0,
-    x: props => (props.moving ? -50 : "")
+    opacity: 0
   },
   visible: {
-    opacity: 1,
-    x: props => (props.moving ? 0 : ""),
-    delay: props => (props.parent ? 100 : ""),
-    delayChildren: props => (props.parent ? 300 : "")
+    opacity: 1
   }
 };
 

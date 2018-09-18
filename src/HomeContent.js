@@ -98,7 +98,7 @@ const ImageContainer = styled(posed.div(AnimatedImage))`
 `;
 const HeroImage = styled.img``;
 
-export default ({ slide }) => {
+export default ({ slide, handlePrev, handleNext }) => {
   return (
     <HomeContent>
       <HeroTextContainer key="Text">
@@ -114,8 +114,8 @@ export default ({ slide }) => {
           <HeroImage src={slide.image} alt="fancy" />
         </ImageContainer>
         <ProjectsNav>
-          <Arrow left />
-          <Arrow />
+          <Arrow left onClick={handlePrev} />
+          <Arrow onClick={handleNext} />
         </ProjectsNav>
       </ColorBlock>
     </HomeContent>

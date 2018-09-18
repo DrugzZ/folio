@@ -104,26 +104,46 @@ class App extends Component {
   }
 
   handleScroll(event) {
-    this.debouncedScroll(event.nativeEvent.wheelDelta);
+    this.debouncedScroll(event.deltaY);
   }
 
   debouncedScroll(event) {
     if (event > 0) {
       let nextSlide =
-        (this.state.slides.length + this.state.currentSlideIndex - 1) %
-        this.state.slides.length;
+        (this.state.currentSlideIndex + 1) % this.state.slides.length;
 
       this.setState({
         currentSlideIndex: nextSlide
       });
     } else {
       let prevSlide =
-        (this.state.currentSlideIndex + 1) % this.state.slides.length;
+        (this.state.slides.length + this.state.currentSlideIndex - 1) %
+        this.state.slides.length;
+
       this.setState({
         currentSlideIndex: prevSlide
       });
     }
   }
+
+  handleNext = () => {
+    let nextSlide =
+      (this.state.currentSlideIndex + 1) % this.state.slides.length;
+
+    this.setState({
+      currentSlideIndex: nextSlide
+    });
+  };
+
+  handlePrev = () => {
+    let prevSlide =
+      (this.state.slides.length + this.state.currentSlideIndex - 1) %
+      this.state.slides.length;
+
+    this.setState({
+      currentSlideIndex: prevSlide
+    });
+  };
 
   render() {
     const filteredSlide = this.state.slides.find(
@@ -133,11 +153,16 @@ class App extends Component {
       <Route
         render={({ location }) => (
           <Wrapper>
+            {console.log(
+              this.state.currentSlideIndex.toString() + location.pathname
+            )}
             <Header isVisible={this.state.isVisible} />
             <PoseGroup animateOnMount>
               <Main
                 onWheel={location.pathname === "/" ? this.handleScroll : null}
-                key={this.state.currentSlideIndex + location.key}
+                key={
+                  this.state.currentSlideIndex.toString() + location.pathname
+                }
               >
                 <Switch location={location}>
                   <Route
@@ -145,7 +170,12 @@ class App extends Component {
                     path="/"
                     key="Home"
                     render={props => (
-                      <HomeContent slide={filteredSlide} {...props} />
+                      <HomeContent
+                        slide={filteredSlide}
+                        {...props}
+                        handleNext={this.handleNext}
+                        handlePrev={this.handlePrev}
+                      />
                     )}
                   />
                   <Route path="/about" key="About" component={AboutContent} />
@@ -156,6 +186,7 @@ class App extends Component {
               isVisible={this.state.isVisible}
               currentSlide={this.state.currentSlideIndex}
               totalSlides={this.state.slides.length}
+              location={location.pathname}
             />
           </Wrapper>
         )}
