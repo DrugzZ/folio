@@ -6,15 +6,29 @@ export default [
     image: require("./assets/img/header_main_img.jpg")
   },
   {
-    text: "Second slide",
-    text2: "goshko",
-    helper: "This is the second slide",
-    image: require("./assets/img/logo_alpaca.png")
+    text: "ROOKIE",
+    text2: "MEDIA",
+    helper: "LSTK; a digital marketing agency universal single-pager",
+    image: require("./assets/img/screen.png"),
+    details: [
+      "Photoshop",
+      "HTML5",
+      "CSS in JS (Styled Components)",
+      "JS (React)",
+      "Google Firebase (Hosting and BaaS)"
+    ]
   },
   {
     text: "Third slide",
     text2: "toshko",
     helper: "This is the third slide",
-    image: require("./assets/img/header_main_img.jpg")
+    image: require("./assets/img/screen.png"),
+    details: [
+      "Photoshop",
+      "HTML5",
+      "CSS in JS (Styled Components)",
+      "JS (React)",
+      "Google Firebase (Hosting and BaaS)"
+    ]
   }
 ];

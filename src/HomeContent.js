@@ -1,8 +1,11 @@
 import React from "react";
 import { media, colors } from "./utility/utility.js";
 import ArrowSVG from "./assets/img/baseline-chevron_right-24px.svg";
+import checkSign from "./assets/img/baseline-check_circle-24px.svg";
 import styled from "styled-components";
 import posed from "react-pose";
+
+const phone = window.matchMedia("(min-width: 400px)").matches;
 
 const AnimatedBlock = {
   enter: {
@@ -11,7 +14,7 @@ const AnimatedBlock = {
     delay: 700
   },
   exit: {
-    x: -100,
+    x: phone ? -100 : 0,
     opacity: 0,
     delay: 300
   }
@@ -34,14 +37,15 @@ const AnimatedText = {
   exit: { y: 50, opacity: 0, delay: 600 }
 };
 
-const HomeContent = styled(posed.div())`
+const HomeWrap = styled.div`
   align-items: center;
-  position: relative
-  display: flex;
+  display: ${props => (props.screen ? "flex" : "none")}
   justify-content: space-between;
-  width: calc(100% - 2 * 8vw);
-  margin: 0 8vw
   height: 100%;
+  ${media.phone`
+    display: ${props => (props.mobile ? "flex" : "none")}
+    flex-direction: column;
+  `};
 `;
 
 const ColorBlock = styled(posed.div(AnimatedBlock))`
@@ -49,17 +53,17 @@ const ColorBlock = styled(posed.div(AnimatedBlock))`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 40%;
-  min-width: 40%;
+  width: 50%;
+  max-width: 50%;
   height: 100%;
-  ${media.phone`
-      display: none;
-  `};
+  max-height: 65vh;
 `;
 
 const ProjectsNav = styled.div`
   align-self: flex-end;
+  right: 0;
   display: flex;
+  position: absolute;
   background-color: ${colors.white};
 `;
 
@@ -73,51 +77,149 @@ const Arrow = styled.div`
   }
 `;
 
-const HeroTextContainer = styled(posed.div(AnimatedText))`
+const DescriptionContainer = styled(posed.div(AnimatedText))`
+  display: flex;
+  flex-direction: column;
   z-index: 2;
+  max-width: calc(50% - 5vw);
+  max-height: 100%;
   ${media.phone`
-      margin:0;
-      top:0;
-  `} > p {
-    letter-spacing: 0.1rem;
+  width:100%;
+  max-width: 100%;
+`};
+`;
+
+const Title = styled.h1`
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  ${media.phone`
+  margin-bottom: 1rem;
+`};
+`;
+
+const Description = styled.div`
+  ${media.phone`
+`};
+`;
+
+const HelperText = styled(posed.p())`
+  padding-left: ${props => (props.left ? "1rem" : "")};
+  line-height: 2;
+  letter-spacing: 0.1rem;
+  margin-bottom: 1rem;
+`;
+
+const LeadText = styled.p`
+  line-height: 2;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+`;
+
+const Details = styled(posed.ul())`
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  > li {
+    margin: 1rem;
+    background: no-repeat url(${checkSign});
+    height: 24px;
+    padding-left: 2rem;
+    padding-top: 3px;
   }
 `;
 
-const HeroText = styled.h1`
-  line-height: 1.5;
-  white-space: nowrap;
-`;
-
 const ImageContainer = styled(posed.div(AnimatedImage))`
-  height: 80%;
-  margin-left: -30%;
-  ${media.phone`
-    width: auto;
-    margin:0;
-`};
+  display: flex;
+  align-items: center;
 `;
-const HeroImage = styled.img``;
 
-export default ({ slide, handlePrev, handleNext }) => {
+const ImageBg = styled.figure`
+  transform: translateX(-5vw);
+  background: ${colors.orange};
+  padding: 3rem;
+  margin: 0;
+`;
+
+const HeroImage = styled.img`
+  max-height: 40vh;
+  max-width: 28vw;
+`;
+
+export default ({ slides, handlePrev, handleNext, slideIndex }) => {
+  let slide = slides.find(
+    (slide, index) => (index === slideIndex ? slide : null)
+  );
   return (
-    <HomeContent>
-      <HeroTextContainer key="Text">
-        <HeroText>
-          {slide.text}
-          <br />
-          {slide.text2}
-        </HeroText>
-        <p>{slide.helper}</p>
-      </HeroTextContainer>
-      <ColorBlock key="Block">
-        <ImageContainer key="Image">
-          <HeroImage src={slide.image} alt="fancy" />
-        </ImageContainer>
-        <ProjectsNav>
-          <Arrow left onClick={handlePrev} />
-          <Arrow onClick={handleNext} />
-        </ProjectsNav>
-      </ColorBlock>
-    </HomeContent>
+    <React.Fragment>
+      <HomeWrap screen>
+        <DescriptionContainer key="Text">
+          <Title>
+            {slide.text}
+            <br />
+            {slide.text2}
+          </Title>
+          {slideIndex > 0 ? (
+            <Description>
+              <LeadText>What am I looking at?</LeadText>
+              <HelperText left>{slide.helper}</HelperText>
+              <LeadText>Things i've used, to make this:</LeadText>
+              <Details>
+                {slide.details.map((single, index) => (
+                  <li key={index}>{single}</li>
+                ))}
+              </Details>
+            </Description>
+          ) : (
+            <HelperText>{slide.helper}</HelperText>
+          )}
+        </DescriptionContainer>
+        <ColorBlock key="Block">
+          <ImageContainer key="Image">
+            <ImageBg>
+              <HeroImage src={slide.image} alt="fancy" />
+            </ImageBg>
+          </ImageContainer>
+          <ProjectsNav>
+            <Arrow left onClick={handlePrev} />
+            <Arrow onClick={handleNext} />
+          </ProjectsNav>
+        </ColorBlock>
+      </HomeWrap>
+      <HomeWrap mobile>
+        {slides.map((slide, index) => (
+          <React.Fragment key={index}>
+            <DescriptionContainer>
+              <Title>
+                {slide.text}
+                <br />
+                {slide.text2}
+              </Title>
+              {index > 0 ? (
+                <Description>
+                  <LeadText>What am I looking at?</LeadText>
+                  <HelperText left>{slide.helper}</HelperText>
+                  <LeadText>Things i've used, to make this:</LeadText>
+                  <Details>
+                    {slide.details.map((single, index) => (
+                      <li key={index}>{single}</li>
+                    ))}
+                  </Details>
+                </Description>
+              ) : (
+                <HelperText>{slide.helper}</HelperText>
+              )}
+            </DescriptionContainer>
+            <ColorBlock>
+              <ImageContainer>
+                <ImageBg>
+                  <HeroImage src={slide.image} alt="fancy" />
+                </ImageBg>
+              </ImageContainer>
+            </ColorBlock>
+          </React.Fragment>
+        ))}
+      </HomeWrap>
+    </React.Fragment>
   );
 };

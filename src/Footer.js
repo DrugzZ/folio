@@ -29,7 +29,7 @@ const DecorText = styled(posed.p(Animated))`
     width: 5rem;
     border-bottom: solid 2px ${colors.orange};
     position: absolute;
-    left: 12rem;
+    left: 21rem;
     top: 50%;
   }
 `;
@@ -64,7 +64,7 @@ const TotalCount = styled.p`
 export default ({ isVisible, currentSlide, totalSlides, location }) => (
   <Footer>
     <DecorText pose={isVisible ? "visible" : "hidden"}>
-      Performance in mind.
+      Useless line enhancing visual appeal.
     </DecorText>
     <Pagination pose={isVisible && location === "/" ? "visible" : "hidden"}>
       <CurrentPosition>

@@ -64,12 +64,7 @@ injectGlobal`
     list-style: none;
   }
   
-  img {
-    width: auto;
-    max-width: 100%;
-    height: auto;
-    max-height: 100%;
-  }
+
 `;
 
 const Wrapper = styled.div`
@@ -80,6 +75,7 @@ const Wrapper = styled.div`
   row-gap: 5%;
   ${media.phone`
     row-gap: 1rem;
+    height: 100%;
   `};
 `;
 
@@ -87,11 +83,23 @@ const Main = styled(posed.div())`
   grid-column: span 12;
 `;
 
+const PageWrap = styled(posed.div())`
+  position: relative
+  width: calc(100% - 2 * 8vw);
+  margin: 0 8vw
+  height: 100%;
+  ${media.phone`
+  margin: 0 1rem;
+  width: calc(100% - 2rem)
+`};
+`;
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isVisible: false,
+      animate: false,
       currentSlideIndex: 0,
       slides: data
     };
@@ -99,8 +107,22 @@ class App extends Component {
     this.debouncedScroll = debounce(this.debouncedScroll.bind(this), 200);
   }
 
+  updateDimensions = () => {
+    if (window.innerWidth < 576) {
+      this.setState({ animate: false });
+    } else {
+      this.setState({ animate: true });
+    }
+  };
+
   componentDidMount() {
     this.setState({ isVisible: true });
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
   }
 
   handleScroll(event) {
@@ -146,40 +168,42 @@ class App extends Component {
   };
 
   render() {
-    const filteredSlide = this.state.slides.find(
-      (slide, index) => (index === this.state.currentSlideIndex ? slide : null)
-    );
     return (
       <Route
         render={({ location }) => (
           <Wrapper>
-            {console.log(
-              this.state.currentSlideIndex.toString() + location.pathname
-            )}
+            {console.log(this.state.animate)}
             <Header isVisible={this.state.isVisible} />
             <PoseGroup animateOnMount>
               <Main
-                onWheel={location.pathname === "/" ? this.handleScroll : null}
+                onWheel={
+                  location.pathname === "/" && this.state.animate
+                    ? this.handleScroll
+                    : null
+                }
                 key={
                   this.state.currentSlideIndex.toString() + location.pathname
                 }
               >
-                <Switch location={location}>
-                  <Route
-                    exact
-                    path="/"
-                    key="Home"
-                    render={props => (
-                      <HomeContent
-                        slide={filteredSlide}
-                        {...props}
-                        handleNext={this.handleNext}
-                        handlePrev={this.handlePrev}
-                      />
-                    )}
-                  />
-                  <Route path="/about" key="About" component={AboutContent} />
-                </Switch>
+                <PageWrap>
+                  <Switch location={location}>
+                    <Route
+                      exact
+                      path="/"
+                      key="Home"
+                      render={props => (
+                        <HomeContent
+                          slides={this.state.slides}
+                          handleNext={this.handleNext}
+                          handlePrev={this.handlePrev}
+                          slideIndex={this.state.currentSlideIndex}
+                          {...props}
+                        />
+                      )}
+                    />
+                    <Route path="/about" key="About" component={AboutContent} />
+                  </Switch>
+                </PageWrap>
               </Main>
             </PoseGroup>
             <Footer

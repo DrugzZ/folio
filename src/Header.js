@@ -15,6 +15,7 @@ const Animated = {
 };
 
 const Header = styled(posed.div(Animated))`
+  align-items: center;
   grid-column: span 12;
   display: flex;
   justify-content: space-between;
@@ -23,11 +24,13 @@ const Header = styled(posed.div(Animated))`
   margin: 0 8vw;
 `;
 
-const Logo = styled.img``;
+const Logo = styled.img`
+  max-height: 100%;
+`;
 
 const Navigation = styled(posed.div(Animated))`
   display: flex;
-  flex-basis: 40%;
+  flex-basis: 40vw;
   align-items: center;
   justify-content: space-around;
 `;
