@@ -8,7 +8,7 @@ export default [
   {
     text: "ROOKIE",
     text2: "MEDIA",
-    helper: "LSTK; a digital marketing agency universal single-pager",
+    helper: "LSTK; a digital marketing agency universal SPA",
     image: require("./assets/img/screen.png"),
     details: [
       "Photoshop",

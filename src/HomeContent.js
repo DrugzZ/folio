@@ -5,16 +5,18 @@ import checkSign from "./assets/img/baseline-check_circle-24px.svg";
 import styled from "styled-components";
 import posed from "react-pose";
 
-const phone = window.matchMedia("(min-width: 400px)").matches;
+const phone = window.matchMedia("(max-width: 567px)").matches;
 
 const AnimatedBlock = {
   enter: {
     x: 0,
+    y: 0,
     opacity: 1,
     delay: 700
   },
   exit: {
-    x: phone ? -100 : 0,
+    x: phone ? 0 : -100,
+    y: phone ? 50 : 0,
     opacity: 0,
     delay: 300
   }
