@@ -28,7 +28,7 @@ injectGlobal`
 
   body {
     background-color: #fff;
-    font-size: 100%;
+    font-size: 16px;
   }
   
   body, h1, h2, h3, h4, h5, h6, p, a, ol, ul {
@@ -74,8 +74,8 @@ const Wrapper = styled.div`
   grid-template-rows: 15% 65% auto;
   row-gap: 5%;
   ${media.phone`
-    row-gap: 1rem;
-    height: 100%;
+    display:flex;
+    flex-direction: column;
   `};
 `;
 
@@ -108,11 +108,9 @@ class App extends Component {
   }
 
   updateDimensions = () => {
-    if (window.innerWidth < 576) {
-      this.setState({ animate: false });
-    } else {
-      this.setState({ animate: true });
-    }
+    window.innerWidth < 576
+      ? this.setState({ animate: false })
+      : this.setState({ animate: true });
   };
 
   componentDidMount() {
@@ -172,7 +170,6 @@ class App extends Component {
       <Route
         render={({ location }) => (
           <Wrapper>
-            {console.log(this.state.animate)}
             <Header isVisible={this.state.isVisible} />
             <PoseGroup animateOnMount>
               <Main

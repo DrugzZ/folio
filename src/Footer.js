@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import posed from "react-pose";
-import { colors } from "./utility/utility.js";
+import { media, colors } from "./utility/utility.js";
 
 const Animated = {
   hidden: {
@@ -20,6 +20,8 @@ const Footer = styled(posed.div(Animated))`
   padding-bottom: 2rem;
   width: calc(100% - 2 * 8vw);
   margin: 0 8vw;
+  ${media.phone`
+  display:none`};
 `;
 
 const DecorText = styled(posed.p(Animated))`
