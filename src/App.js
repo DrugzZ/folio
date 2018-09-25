@@ -51,11 +51,15 @@ injectGlobal`
     letter-spacing: 0.5rem;
     line-height: 1.05;
     ${media.desktop`
-      font-size: 3em;
+      font-size: 2.5em;
       line-height: 1.25;
     `};
     ${media.tablet`
-      font-size: 2em;
+      font-size: 1.8em;
+      line-height: 1.25;
+    `};
+    ${media.phone`
+      font-size: 1.5em;
       line-height: 1.25;
     `};
   }
@@ -70,6 +74,7 @@ injectGlobal`
 const Wrapper = styled.div`
   display: grid;
   height: 100vh;
+  min-height: 800px;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: 15% 65% auto;
   row-gap: 5%;
@@ -83,7 +88,7 @@ const Main = styled(posed.div())`
   grid-column: span 12;
 `;
 
-const PageWrap = styled(posed.div())`
+const ContentWrap = styled(posed.div())`
   position: relative
   width: calc(100% - 2 * 8vw);
   margin: 0 8vw
@@ -99,7 +104,7 @@ class App extends Component {
     super(props);
     this.state = {
       isVisible: false,
-      animate: false,
+      mobile: false,
       currentSlideIndex: 0,
       slides: data
     };
@@ -108,9 +113,9 @@ class App extends Component {
   }
 
   updateDimensions = () => {
-    window.innerWidth < 576
-      ? this.setState({ animate: false })
-      : this.setState({ animate: true });
+    window.innerWidth > 576
+      ? this.setState({ mobile: false })
+      : this.setState({ mobile: true });
   };
 
   componentDidMount() {
@@ -174,7 +179,7 @@ class App extends Component {
             <PoseGroup animateOnMount>
               <Main
                 onWheel={
-                  location.pathname === "/" && this.state.animate
+                  location.pathname === "/" && this.state.mobile === false
                     ? this.handleScroll
                     : null
                 }
@@ -182,7 +187,7 @@ class App extends Component {
                   this.state.currentSlideIndex.toString() + location.pathname
                 }
               >
-                <PageWrap>
+                <ContentWrap>
                   <Switch location={location}>
                     <Route
                       exact
@@ -194,13 +199,14 @@ class App extends Component {
                           handleNext={this.handleNext}
                           handlePrev={this.handlePrev}
                           slideIndex={this.state.currentSlideIndex}
+                          mobile={this.state.mobile}
                           {...props}
                         />
                       )}
                     />
                     <Route path="/about" key="About" component={AboutContent} />
                   </Switch>
-                </PageWrap>
+                </ContentWrap>
               </Main>
             </PoseGroup>
             <Footer

@@ -30,14 +30,12 @@ const Header = styled(posed.div(Animated))`
     padding: 0;`};
 `;
 
-const LogoContainer = styled(posed.div(Animated))`
+const Logo = styled(posed.div(Animated))`
+  height: 100%
   flex-basis: 8%;
-  ${media.phone`flex-basis: 15%`};
-`;
-
-const Logo = styled.img`
-  width: 100%;
-  height: auto;
+  ${media.phone`flex-basis: 20%`};
+  background: url(${logoAlpaca}) no-repeat left;
+  background-size: contain;
 `;
 
 const Navigation = styled(posed.div(Animated))`
@@ -53,9 +51,7 @@ const Link = styled(NavLink)``;
 
 export default ({ isVisible }) => (
   <Header pose={isVisible ? "visible" : "hidden"}>
-    <LogoContainer>
-      <Logo src={logoAlpaca} alt="Beautiful Alpaca" />
-    </LogoContainer>
+    <Logo />
     <Navigation>
       <Link to="/">Projects</Link>
       <Link to="/about">à Propos</Link>

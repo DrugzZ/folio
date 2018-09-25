@@ -1,13 +1,13 @@
 export default [
   {
     text: "a Collection",
-    text2: "of works",
+    text1: "of works",
     helper: "Very original, modern, professional",
     image: require("./assets/img/header_main_img.jpg")
   },
   {
     text: "ROOKIE",
-    text2: "MEDIA",
+    text1: "MEDIA",
     helper: "LSTK; a digital marketing agency universal SPA",
     image: require("./assets/img/screen.png"),
     details: [
@@ -20,7 +20,7 @@ export default [
   },
   {
     text: "Third slide",
-    text2: "toshko",
+    text1: "toshko",
     helper: "This is the third slide",
     image: require("./assets/img/screen.png"),
     details: [
