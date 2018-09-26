@@ -1,15 +1,13 @@
 export default [
   {
-    text: "a Collection",
-    text1: "of works",
+    text: "a Collection of works",
     helper: "Very original, modern, professional",
-    image: require("./assets/img/header_main_img.jpg")
+    image: require("../img/header_main_img.jpg")
   },
   {
-    text: "ROOKIE",
-    text1: "MEDIA",
+    text: "ROOKIE MEDIA",
     helper: "LSTK; a digital marketing agency universal SPA",
-    image: require("./assets/img/screen.png"),
+    image: require("../img/screen.png"),
     details: [
       "Photoshop",
       "HTML5",
@@ -19,10 +17,9 @@ export default [
     ]
   },
   {
-    text: "Third slide",
-    text1: "toshko",
+    text: "Third slide toshko",
     helper: "This is the third slide",
-    image: require("./assets/img/screen.png"),
+    image: require("../img/screen.png"),
     details: [
       "Photoshop",
       "HTML5",

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import posed from "react-pose";
-import { media, colors } from "./utility/utility.js";
+import { media, colors } from "../../utility/utility.js";
 
 const Animated = {
   hidden: {
@@ -34,6 +34,9 @@ const DecorText = styled(posed.p(Animated))`
     left: 21rem;
     top: 50%;
   }
+  ${media.tablet`
+    visibility: hidden;
+  `};
 `;
 
 const Pagination = styled(posed.div(Animated))`

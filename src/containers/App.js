@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import { media, colors, fonts } from "./utility/utility.js";
+import { media, colors, fonts } from "../utility/utility.js";
 import styled, { injectGlobal } from "styled-components";
 import styledNormalize from "styled-normalize";
 import debounce from "lodash.debounce";
 
-import Header from "./Header.js";
-import HomeContent from "./HomeContent.js";
-import Footer from "./Footer.js";
-import AboutContent from "./AboutContent.js";
+import Header from "./header/Header.js";
+import HomeContent from "./home/HomeContent.js";
+import Footer from "./footer/Footer.js";
+import AboutContent from "./about/AboutContent.js";
 import { Route, Switch } from "react-router-dom";
 
-import data from "./projectSeed.js";
+import data from "../assets/data/projectSeed.js";
 import posed, { PoseGroup } from "react-pose";
 
 injectGlobal`
@@ -74,7 +74,7 @@ injectGlobal`
 const Wrapper = styled.div`
   display: grid;
   height: 100vh;
-  min-height: 800px;
+  min-height: 780px;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: 15% 65% auto;
   row-gap: 5%;
@@ -93,6 +93,10 @@ const ContentWrap = styled(posed.div())`
   width: calc(100% - 2 * 8vw);
   margin: 0 8vw
   height: 100%;
+  ${media.tablet`
+  margin: 0 4vw;
+  width: calc(100% - 2 * 4vw)
+`};
   ${media.phone`
   margin: 0 1rem;
   width: calc(100% - 2rem)

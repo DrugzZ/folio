@@ -1,6 +1,6 @@
 import React from "react";
-import { media, colors } from "./utility/utility.js";
-import ArrowSVG from "./assets/img/baseline-chevron_right-24px.svg";
+import { media, colors } from "../../../utility/utility.js";
+import ArrowSVG from "../../../assets/img/baseline-chevron_right-24px.svg";
 import styled from "styled-components";
 import posed from "react-pose";
 
@@ -41,7 +41,10 @@ const ColorBlock = styled(posed.div(AnimatedBlock))`
   width: 45%;
   height: 100%;
   max-height: 65vh;
+  min-height: 28rem;
   ${media.phone`
+    align-self: center;
+    min-height: auto;
     margin-bottom: 1rem;
     margin-left: 5vw;
     width: 80%;
