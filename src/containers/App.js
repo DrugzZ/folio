@@ -108,7 +108,7 @@ class App extends Component {
     super(props);
     this.state = {
       isVisible: false,
-      mobile: false,
+      mobile: null,
       currentSlideIndex: 0,
       slides: data
     };
