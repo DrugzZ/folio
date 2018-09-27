@@ -102,7 +102,14 @@ const HeroVideo = styled.video`
   `};
 `;
 
-export default ({ image, handlePrev, handleNext, mobile, slideIndex }) => {
+export default ({
+  image,
+  handlePrev,
+  handleNext,
+  mobile,
+  slideIndex,
+  mobileIndex
+}) => {
   let videoControls = e => {
     e.preventDefault();
     e.target.paused ? e.target.play() : e.target.pause();
@@ -120,7 +127,7 @@ export default ({ image, handlePrev, handleNext, mobile, slideIndex }) => {
     <ColorBlock key="Block">
       <ImageContainer key="Image">
         <ImageBg>
-          {slideIndex > 1 ? (
+          {slideIndex || mobileIndex > 1 ? (
             <HeroVideo
               onClick={videoControls}
               onCanPlay={delayPlay}

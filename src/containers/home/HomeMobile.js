@@ -36,6 +36,7 @@ export default props => (
             handlePrev={props.handlePrev}
             handleNext={props.handleNext}
             mobile={props.mobile}
+            mobileIndex={index}
           />
           <Description
             helperText={slide.helper}
