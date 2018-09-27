@@ -19,7 +19,7 @@ export default [
   {
     text: "Third slide toshko",
     helper: "This is the third slide",
-    image: require("../img/screen.png"),
+    image: require("../img/sealsru.webm"),
     details: [
       "Photoshop",
       "HTML5",

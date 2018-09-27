@@ -1,8 +1,14 @@
 import React from "react";
 import { media } from "../../../utility/utility.js";
 import styled from "styled-components";
+import posed from "react-pose";
 
-const Title = styled.h1`
+const AnimatedText = {
+  enter: { y: 0, opacity: 1, delay: 1200 },
+  exit: { y: 50, opacity: 0, delay: 600 }
+};
+
+const Title = styled(posed.h1(AnimatedText))`
   line-height: 1.5;
   margin-bottom: 2rem;
   white-space: nowrap;

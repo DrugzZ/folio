@@ -53,7 +53,7 @@ const Navigation = styled(posed.div(Animated))`
 const Link = styled(NavLink)``;
 
 export default ({ isVisible }) => (
-  <Header pose={isVisible ? "visible" : "hidden"}>
+  <Header pose={isVisible ? "visible" : "hidden"} >
     <Logo />
     <Navigation>
       <Link to="/">Projects</Link>

@@ -4,13 +4,18 @@ import checkSign from "../../../assets/img/baseline-check_circle-24px.svg";
 import styled from "styled-components";
 import posed from "react-pose";
 
-const LeadText = styled.p`
+const AnimatedText = {
+  enter: { y: 0, opacity: 1, delay: 1400 },
+  exit: { y: 50, opacity: 0, delay: 400 }
+};
+
+const LeadText = styled(posed.p(AnimatedText))`
   line-height: 2;
   font-weight: bold;
   letter-spacing: 0.1rem;
 `;
 
-const Details = styled(posed.ul())`
+const Details = styled(posed.ul(AnimatedText))`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   grid-auto-columns: 1fr;
@@ -27,7 +32,7 @@ const Details = styled(posed.ul())`
   `};
 `;
 
-const HelperText = styled(posed.p())`
+const HelperText = styled(posed.p(AnimatedText))`
   padding-left: ${props => (props.left ? "1rem" : "")};
   line-height: 2;
   letter-spacing: 0.1rem;

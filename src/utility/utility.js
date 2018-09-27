@@ -31,3 +31,5 @@ export const fonts = {
   Georgia, serif;`,
   base: `-apple-system, system-ui, BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;`
 };
+
+export let vh = window.innerHeight * 0.01;

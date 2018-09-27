@@ -1,15 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import posed from "react-pose";
 
 import Title from "./components/Title.js";
 import ColorBlock from "./components/ColorBlock.js";
 import Description from "./components/Description.js";
-
-const AnimatedText = {
-  enter: { y: 0, opacity: 1, delay: 1200 },
-  exit: { y: 50, opacity: 0, delay: 600 }
-};
 
 const HomeWrap = styled.div`
   align-items: center;
@@ -18,7 +12,7 @@ const HomeWrap = styled.div`
   height: 100%;
 `;
 
-const DescriptionContainer = styled(posed.div(AnimatedText))`
+const DescriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 2;
@@ -42,6 +36,7 @@ export default props => {
         image={slide.image}
         handlePrev={handlePrev}
         handleNext={handleNext}
+        slideIndex={slideIndex}
       />
     </HomeWrap>
   );

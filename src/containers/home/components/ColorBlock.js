@@ -4,8 +4,6 @@ import ArrowSVG from "../../../assets/img/baseline-chevron_right-24px.svg";
 import styled from "styled-components";
 import posed from "react-pose";
 
-const phone = window.matchMedia("(max-width: 567px)").matches;
-
 const AnimatedBlock = {
   enter: {
     x: 0,
@@ -14,8 +12,8 @@ const AnimatedBlock = {
     delay: 700
   },
   exit: {
-    x: phone ? 0 : -100,
-    y: phone ? 50 : 0,
+    x: -100,
+    y: 0,
     opacity: 0,
     delay: 300
   }
@@ -53,7 +51,7 @@ const ColorBlock = styled(posed.div(AnimatedBlock))`
 
 const ProjectsNav = styled.div`
   align-self: flex-end;
-  right: 0;
+  right: -1px;
   display: flex;
   position: absolute;
   background-color: ${colors.white};
@@ -94,18 +92,55 @@ const HeroImage = styled.img`
   `};
 `;
 
-export default ({ image, handlePrev, handleNext, mobile }) => (
-  <ColorBlock key="Block">
-    <ImageContainer key="Image">
-      <ImageBg>
-        <HeroImage src={image} alt="fancy" />
-      </ImageBg>
-    </ImageContainer>
-    {mobile ? null : (
-      <ProjectsNav>
-        <Arrow left onClick={handlePrev} />
-        <Arrow onClick={handleNext} />
-      </ProjectsNav>
-    )}
-  </ColorBlock>
-);
+const HeroVideo = styled.video`
+  max-height: 40vh;
+  max-width: 28vw;
+  cursor: pointer;
+  ${media.phone`
+    max-width: 60vw;
+    max-height: 30vh;
+  `};
+`;
+
+export default ({ image, handlePrev, handleNext, mobile, slideIndex }) => {
+  let videoControls = e => {
+    e.preventDefault();
+    e.target.paused ? e.target.play() : e.target.pause();
+  };
+
+  let delayPlay = e => {
+    e.preventDefault();
+    let player = e.target;
+    setTimeout(function() {
+      player.play();
+    }, 1650);
+  };
+
+  return (
+    <ColorBlock key="Block">
+      <ImageContainer key="Image">
+        <ImageBg>
+          {slideIndex > 1 ? (
+            <HeroVideo
+              onClick={videoControls}
+              onCanPlay={delayPlay}
+              loop
+              muted
+              playsInline
+            >
+              <source type="video/webm" src={image} />
+            </HeroVideo>
+          ) : (
+            <HeroImage src={image} alt="fancy" />
+          )}
+        </ImageBg>
+      </ImageContainer>
+      {mobile ? null : (
+        <ProjectsNav>
+          <Arrow left onClick={handlePrev} />
+          <Arrow onClick={handleNext} />
+        </ProjectsNav>
+      )}
+    </ColorBlock>
+  );
+};

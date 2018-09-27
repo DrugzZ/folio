@@ -74,9 +74,9 @@ injectGlobal`
 const Wrapper = styled.div`
   display: grid;
   height: 100vh;
-  min-height: 780px;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: 15% 65% auto;
+  min-height: 780px;
   row-gap: 5%;
   ${media.phone`
     display:flex;
@@ -89,17 +89,17 @@ const Main = styled(posed.div())`
 `;
 
 const ContentWrap = styled(posed.div())`
-  position: relative
-  width: calc(100% - 2 * 8vw);
-  margin: 0 8vw
   height: 100%;
+  margin: 0 8vw;
+  position: relative;
+  width: calc(100% - 2 * 8vw);
   ${media.tablet`
   margin: 0 4vw;
-  width: calc(100% - 2 * 4vw)
+  width: calc(100% - 2 * 4vw);
 `};
   ${media.phone`
   margin: 0 1rem;
-  width: calc(100% - 2rem)
+  width: calc(100% - 2rem);
 `};
 `;
 
@@ -107,24 +107,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: false,
-      mobile: null,
+      isVisible: null,
+      mobile: false,
       currentSlideIndex: 0,
-      slides: data
+      slides: data,
+      vh: window.innerHeight * 0.01
     };
-    this.handleScroll = this.handleScroll.bind(this);
     this.debouncedScroll = debounce(this.debouncedScroll.bind(this), 200);
   }
 
   updateDimensions = () => {
+    this.setState({ vh: window.innerHeight * 0.01 });
     window.innerWidth > 576
       ? this.setState({ mobile: false })
       : this.setState({ mobile: true });
   };
 
   componentDidMount() {
-    this.setState({ isVisible: true });
     this.updateDimensions();
+    this.setState({ isVisible: true });
     window.addEventListener("resize", this.updateDimensions);
   }
 
@@ -132,9 +133,7 @@ class App extends Component {
     window.removeEventListener("resize", this.updateDimensions);
   }
 
-  handleScroll(event) {
-    this.debouncedScroll(event.deltaY);
-  }
+  handleScroll = event => this.debouncedScroll(event.deltaY);
 
   debouncedScroll(event) {
     if (event > 0) {
@@ -174,6 +173,16 @@ class App extends Component {
     });
   };
 
+  preloadImages = data => {
+    data.forEach((a, i) => {
+      let imgSrc = a.image;
+      if (i > 0) {
+        let img = new Image();
+        img.src = imgSrc;
+      }
+    });
+  };
+
   render() {
     return (
       <Route
@@ -204,6 +213,7 @@ class App extends Component {
                           handlePrev={this.handlePrev}
                           slideIndex={this.state.currentSlideIndex}
                           mobile={this.state.mobile}
+                          vh={this.state.vh}
                           {...props}
                         />
                       )}

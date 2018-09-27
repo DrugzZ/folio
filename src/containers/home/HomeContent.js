@@ -4,7 +4,7 @@ import HomeScreen from "./HomeScreen.js";
 import HomeMobile from "./HomeMobile.js";
 
 export default props => {
-  let { slides, handlePrev, handleNext, slideIndex, mobile } = props;
+  let { slides, handlePrev, handleNext, slideIndex, mobile, vh } = props;
   let slide = slides.find(
     (slide, index) => (index === slideIndex ? slide : null)
   );
@@ -14,6 +14,7 @@ export default props => {
       handlePrev={handlePrev}
       handleNext={handleNext}
       mobile={mobile}
+      vh={vh}
     />
   ) : (
     <HomeScreen
