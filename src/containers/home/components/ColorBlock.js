@@ -1,6 +1,6 @@
 import React from "react";
 import { media, colors } from "../../../utility/utility.js";
-import ArrowSVG from "../../../assets/img/baseline-chevron_right-24px.svg";
+import ArrowSVG from "../../../assets/media/baseline-chevron_right-24px.svg";
 import styled from "styled-components";
 import posed from "react-pose";
 
@@ -45,7 +45,10 @@ const ColorBlock = styled(posed.div(AnimatedBlock))`
     min-height: auto;
     margin-bottom: 1rem;
     margin-left: 5vw;
-    width: 80%;
+    width: 80% !important;
+  `};
+  ${media.tablet`
+    width: auto;
   `};
 `;
 
@@ -86,6 +89,9 @@ const ImageBg = styled.figure`
 const HeroImage = styled.img`
   max-height: 40vh;
   max-width: 28vw;
+  ${media.desktop`
+    max-height: 33vh;
+  `};
   ${media.phone`
     max-width: 60vw;
     max-height: 30vh;
@@ -102,14 +108,7 @@ const HeroVideo = styled.video`
   `};
 `;
 
-export default ({
-  image,
-  handlePrev,
-  handleNext,
-  mobile,
-  slideIndex,
-  mobileIndex
-}) => {
+export default ({ image, handlePrev, handleNext, mobile, slideIndex }) => {
   let videoControls = e => {
     e.preventDefault();
     e.target.paused ? e.target.play() : e.target.pause();
@@ -127,7 +126,7 @@ export default ({
     <ColorBlock key="Block">
       <ImageContainer key="Image">
         <ImageBg>
-          {slideIndex || mobileIndex > 1 ? (
+          {typeof image === "object" ? (
             <HeroVideo
               onClick={videoControls}
               onCanPlay={delayPlay}
@@ -135,7 +134,8 @@ export default ({
               muted
               playsInline
             >
-              <source type="video/webm" src={image} />
+              <source type="video/webm" src={image.webm} />
+              <source type="video/mp4" src={image.mp4} />
             </HeroVideo>
           ) : (
             <HeroImage src={image} alt="fancy" />

@@ -76,7 +76,7 @@ const Wrapper = styled.div`
   height: 100vh;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: 15% 65% auto;
-  min-height: 780px;
+  min-height: 765px;
   row-gap: 5%;
   ${media.phone`
     display:flex;
@@ -118,7 +118,7 @@ class App extends Component {
 
   updateDimensions = () => {
     this.setState({ vh: window.innerHeight * 0.01 });
-    window.innerWidth > 576
+    window.innerWidth > 605
       ? this.setState({ mobile: false })
       : this.setState({ mobile: true });
   };

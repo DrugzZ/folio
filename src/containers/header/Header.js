@@ -4,7 +4,7 @@ import posed from "react-pose";
 import { NavLink } from "react-router-dom";
 import { media } from "../../utility/utility.js";
 
-import logoAlpaca from "../../assets/img/logo_alpaca.png";
+import logoAlpaca from "../../assets/media/logo_alpaca.png";
 
 const Animated = {
   hidden: {
@@ -53,7 +53,7 @@ const Navigation = styled(posed.div(Animated))`
 const Link = styled(NavLink)``;
 
 export default ({ isVisible }) => (
-  <Header pose={isVisible ? "visible" : "hidden"} >
+  <Header pose={isVisible ? "visible" : "hidden"}>
     <Logo />
     <Navigation>
       <Link to="/">Projects</Link>

@@ -1,6 +1,6 @@
 import React from "react";
 import { media } from "../../../utility/utility.js";
-import checkSign from "../../../assets/img/baseline-check_circle-24px.svg";
+import checkSign from "../../../assets/media/baseline-check_circle-24px.svg";
 import styled from "styled-components";
 import posed from "react-pose";
 
@@ -21,7 +21,7 @@ const Details = styled(posed.ul(AnimatedText))`
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
   > li {
-    margin: 1rem;
+    margin: 0.6rem;
     background: no-repeat url(${checkSign});
     height: 24px;
     padding-left: 2rem;
@@ -35,7 +35,6 @@ const Details = styled(posed.ul(AnimatedText))`
 const HelperText = styled(posed.p(AnimatedText))`
   padding-left: ${props => (props.left ? "1rem" : "")};
   line-height: 2;
-  letter-spacing: 0.1rem;
   margin-bottom: 1rem;
   ${media.phone`
     align-self: ${props => (props.centered ? "center" : "")};

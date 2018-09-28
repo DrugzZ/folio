@@ -4,7 +4,7 @@ const sizes = {
   widescreen: 1199.98,
   desktop: 991.98,
   tablet: 767.98,
-  phone: 575.98
+  phone: 605
 };
 
 // Iterate through the sizes and create a media template

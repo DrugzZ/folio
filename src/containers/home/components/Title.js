@@ -9,7 +9,6 @@ const AnimatedText = {
 };
 
 const Title = styled(posed.h1(AnimatedText))`
-  line-height: 1.5;
   margin-bottom: 2rem;
   white-space: nowrap;
   display: flex;

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { media } from "../../utility/utility.js";
 
 import Title from "./components/Title.js";
 import ColorBlock from "./components/ColorBlock.js";
@@ -18,6 +19,9 @@ const DescriptionContainer = styled.div`
   z-index: 2;
   max-width: calc(50% - 5vw);
   max-height: 100%;
+  ${media.tablet`
+    max-width: calc(58% - 5vw);
+  `};
 `;
 
 export default props => {
