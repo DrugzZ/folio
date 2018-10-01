@@ -22,6 +22,7 @@ export default [
     helper:
       "LSTK; A small sales company's web business card, with a tiny CMS in the back for catalogue and news management.",
     image: {
+      poster: require("../media/sealsPos.jpg"),
       webm: require("../media/sealsru.webm"),
       mp4: require("../media/sealsru.mp4")
     },

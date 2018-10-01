@@ -1,8 +1,13 @@
-import React from "react";
+import React, { Component } from "react";
 import { media, colors } from "../../../utility/utility.js";
 import ArrowSVG from "../../../assets/media/baseline-chevron_right-24px.svg";
+import PlayBtn from "../../../assets/media/baseline-play_circle_outline-24px.svg";
+import gitIcon from "../../../assets/media/githubLogo.svg";
+import linkIcon from "../../../assets/media/baseline-link-24px.svg";
 import styled from "styled-components";
 import posed from "react-pose";
+
+import CustomIcon from "./CustomIcon.js";
 
 const AnimatedBlock = {
   enter: {
@@ -31,7 +36,18 @@ const AnimatedImage = {
   }
 };
 
-const ColorBlock = styled(posed.div(AnimatedBlock))`
+const AnimatedCtrls = {
+  visible: {
+    opacity: 1,
+    transition: { duration: 200 }
+  },
+  hidden: {
+    opacity: 0,
+    transition: { duration: 200 }
+  }
+};
+
+const ColorBlockContainer = styled(posed.div(AnimatedBlock))`
   background-color: ${colors.darkPurple};
   display: flex;
   justify-content: space-between;
@@ -98,56 +114,124 @@ const HeroImage = styled.img`
   `};
 `;
 
+const VideoCont = styled.div`
+  position: relative;
+  overflow: hidden;
+  display: flex;
+`;
+
+const VideoOverlay = styled(posed.div(AnimatedCtrls))`
+  position: absolute;
+  z-index: 5;
+  background: linear-gradient(
+    to bottom right,
+    rgba(61, 56, 82, 1),
+    rgba(251, 188, 97, 0.5),
+    rgba(61, 56, 82, 1)
+  );
+  background-position: center;
+  background-size: auto;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ExtLinks = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 6;
+  bottom: 0;
+`;
+
 const HeroVideo = styled.video`
   max-height: 40vh;
   max-width: 28vw;
-  cursor: pointer;
+  filter: ${props => (props.blured ? "blur(5px)" : "")};
+  }
   ${media.phone`
     max-width: 60vw;
     max-height: 30vh;
   `};
 `;
 
-export default ({ image, handlePrev, handleNext, mobile, slideIndex }) => {
-  let videoControls = e => {
-    e.preventDefault();
-    e.target.paused ? e.target.play() : e.target.pause();
+export default class ColorBlock extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      paused: false
+    };
+  }
+
+  videoControls = e => {
+    if (!this.state.paused) {
+      this.setState({ paused: true });
+      e.target.nextSibling.pause();
+      return;
+    }
+    this.setState({ paused: false });
+    e.target.nextSibling.play();
+    return;
   };
 
-  let delayPlay = e => {
-    e.preventDefault();
+  handleEnded = () => {
+    this.setState({ paused: true });
+  };
+
+  delayPlay = e => {
     let player = e.target;
     setTimeout(function() {
-      player.play();
+      player.autoplay = true;
     }, 1650);
   };
 
-  return (
-    <ColorBlock key="Block">
-      <ImageContainer key="Image">
-        <ImageBg>
-          {typeof image === "object" ? (
-            <HeroVideo
-              onClick={videoControls}
-              onCanPlay={delayPlay}
-              loop
-              muted
-              playsInline
-            >
-              <source type="video/webm" src={image.webm} />
-              <source type="video/mp4" src={image.mp4} />
-            </HeroVideo>
-          ) : (
-            <HeroImage src={image} alt="fancy" />
-          )}
-        </ImageBg>
-      </ImageContainer>
-      {mobile ? null : (
-        <ProjectsNav>
-          <Arrow left onClick={handlePrev} />
-          <Arrow onClick={handleNext} />
-        </ProjectsNav>
-      )}
-    </ColorBlock>
-  );
-};
+  render() {
+    const { image, handlePrev, handleNext, mobile } = this.props;
+    return (
+      <ColorBlockContainer key="Block">
+        <ImageContainer key="Image">
+          <ImageBg>
+            {typeof image === "object" ? (
+              <VideoCont onClick={this.videoControls}>
+                {this.state.paused ? (
+                  <React.Fragment>
+                    <CustomIcon iconSrc={PlayBtn} size="60px" absolute />
+                    <ExtLinks>
+                      <CustomIcon iconSrc={gitIcon} size="20px" />
+                      <CustomIcon iconSrc={linkIcon} size="28px" />
+                    </ExtLinks>{" "}
+                  </React.Fragment>
+                ) : null}
+                <VideoOverlay pose={this.state.paused ? "visible" : "hidden"} />
+                <HeroVideo
+                  blured={this.state.paused}
+                  onEnded={this.handleEnded}
+                  onCanPlay={this.delayPlay}
+                  muted
+                  playsInline
+                >
+                  <source type="video/webm" src={image.webm} />
+                  <source type="video/mp4" src={image.mp4} />
+                </HeroVideo>
+              </VideoCont>
+            ) : (
+              <HeroImage src={image} alt="fancy" />
+            )}
+          </ImageBg>
+        </ImageContainer>
+        {mobile ? null : (
+          <ProjectsNav>
+            <Arrow left onClick={handlePrev} />
+            <Arrow onClick={handleNext} />
+          </ProjectsNav>
+        )}
+      </ColorBlockContainer>
+    );
+  }
+}

@@ -67,8 +67,6 @@ injectGlobal`
   ol, ul {
     list-style: none;
   }
-  
-
 `;
 
 const Wrapper = styled.div`
