@@ -117,7 +117,6 @@ const HeroImage = styled.img`
 const VideoCont = styled.div`
   position: relative;
   overflow: hidden;
-  display: flex;
 `;
 
 const VideoOverlay = styled(posed.div(AnimatedCtrls))`
@@ -134,11 +133,20 @@ const VideoOverlay = styled(posed.div(AnimatedCtrls))`
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const PlayBtnWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 6;
 `;
 
 const ExtLinks = styled.div`
@@ -169,14 +177,19 @@ export default class ColorBlock extends Component {
     };
   }
 
-  videoControls = e => {
+  videoPause = () => {
+    let player = document.getElementsByTagName("video")[0];
     if (!this.state.paused) {
       this.setState({ paused: true });
-      e.target.nextSibling.pause();
+      player.pause();
       return;
     }
+  };
+
+  videoPlay = () => {
+    let player = document.getElementsByTagName("video")[0];
     this.setState({ paused: false });
-    e.target.nextSibling.play();
+    player.play();
     return;
   };
 
@@ -187,7 +200,7 @@ export default class ColorBlock extends Component {
   delayPlay = e => {
     let player = e.target;
     setTimeout(function() {
-      player.autoplay = true;
+      player.play();
     }, 1650);
   };
 
@@ -198,10 +211,16 @@ export default class ColorBlock extends Component {
         <ImageContainer key="Image">
           <ImageBg>
             {typeof image === "object" ? (
-              <VideoCont onClick={this.videoControls}>
+              <VideoCont onClick={this.videoPause}>
                 {this.state.paused ? (
                   <React.Fragment>
-                    <CustomIcon iconSrc={PlayBtn} size="60px" absolute />
+                    <PlayBtnWrap>
+                      <CustomIcon
+                        iconSrc={PlayBtn}
+                        size="60px"
+                        onClick={this.videoPlay}
+                      />
+                    </PlayBtnWrap>
                     <ExtLinks>
                       <CustomIcon iconSrc={gitIcon} size="20px" />
                       <CustomIcon iconSrc={linkIcon} size="28px" />
@@ -210,10 +229,10 @@ export default class ColorBlock extends Component {
                 ) : null}
                 <VideoOverlay pose={this.state.paused ? "visible" : "hidden"} />
                 <HeroVideo
+                  muted
                   blured={this.state.paused}
                   onEnded={this.handleEnded}
                   onCanPlay={this.delayPlay}
-                  muted
                   playsInline
                 >
                   <source type="video/webm" src={image.webm} />
