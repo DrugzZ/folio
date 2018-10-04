@@ -152,10 +152,11 @@ const PlayBtnWrap = styled.div`
 const ExtLinks = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: flex-end;
   position: absolute;
   z-index: 6;
   bottom: 0;
+  padding: 0 0.3rem 0.3rem 0;
 `;
 
 const HeroVideo = styled.video`
@@ -217,12 +218,12 @@ export default class ColorBlock extends Component {
                     <PlayBtnWrap>
                       <CustomIcon
                         iconSrc={PlayBtn}
-                        size="60px"
+                        size="56px"
                         onClick={this.videoPlay}
                       />
                     </PlayBtnWrap>
                     <ExtLinks>
-                      <CustomIcon iconSrc={gitIcon} size="20px" />
+                      <CustomIcon iconSrc={gitIcon} size="28px" />
                       <CustomIcon iconSrc={linkIcon} size="28px" />
                     </ExtLinks>{" "}
                   </React.Fragment>
