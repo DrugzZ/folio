@@ -117,6 +117,7 @@ const HeroImage = styled.img`
 const VideoCont = styled.div`
   position: relative;
   overflow: hidden;
+  cursor: ${props => (props.paused ? "" : "pointer")};
 `;
 
 const VideoOverlay = styled(posed.div(AnimatedCtrls))`
@@ -147,6 +148,7 @@ const PlayBtnWrap = styled.div`
   height: 100%;
   position: absolute;
   z-index: 6;
+  opacity: ${props => (props.paused ? "100" : "0")};
 `;
 
 const ExtLinks = styled.div`
@@ -157,6 +159,7 @@ const ExtLinks = styled.div`
   z-index: 6;
   bottom: 0;
   padding: 0 0.3rem 0.3rem 0;
+  opacity: ${props => (props.paused ? "100" : "0")};
 `;
 
 const HeroVideo = styled.video`
@@ -212,25 +215,22 @@ export default class ColorBlock extends Component {
         <ImageContainer key="Image">
           <ImageBg>
             {typeof image === "object" ? (
-              <VideoCont onClick={this.videoPause}>
-                {this.state.paused ? (
-                  <React.Fragment>
-                    <PlayBtnWrap>
-                      <CustomIcon
-                        iconSrc={PlayBtn}
-                        size="56px"
-                        onClick={this.videoPlay}
-                      />
-                    </PlayBtnWrap>
-                    <ExtLinks>
-                      <CustomIcon iconSrc={gitIcon} size="28px" />
-                      <CustomIcon iconSrc={linkIcon} size="28px" />
-                    </ExtLinks>{" "}
-                  </React.Fragment>
-                ) : null}
+              <VideoCont onClick={this.videoPause} paused={this.state.paused}>
+                <PlayBtnWrap paused={this.state.paused}>
+                  <CustomIcon
+                    iconSrc={PlayBtn}
+                    size="56px"
+                    onClick={this.videoPlay}
+                  />
+                </PlayBtnWrap>
+                <ExtLinks paused={this.state.paused}>
+                  <CustomIcon iconSrc={gitIcon} size="28px" />
+                  <CustomIcon iconSrc={linkIcon} size="28px" />
+                </ExtLinks>
                 <VideoOverlay pose={this.state.paused ? "visible" : "hidden"} />
                 <HeroVideo
                   muted
+                  preload="auto"
                   blured={this.state.paused}
                   onEnded={this.handleEnded}
                   onCanPlay={this.delayPlay}

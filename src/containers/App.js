@@ -171,16 +171,6 @@ class App extends Component {
     });
   };
 
-  preloadImages = data => {
-    data.forEach((a, i) => {
-      let imgSrc = a.image;
-      if (i > 0) {
-        let img = new Image();
-        img.src = imgSrc;
-      }
-    });
-  };
-
   render() {
     return (
       <Route
