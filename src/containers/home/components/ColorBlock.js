@@ -224,8 +224,18 @@ export default class ColorBlock extends Component {
                   />
                 </PlayBtnWrap>
                 <ExtLinks paused={this.state.paused}>
-                  <CustomIcon iconSrc={gitIcon} size="28px" />
-                  <CustomIcon iconSrc={linkIcon} size="28px" />
+                  {image.github && (
+                    <CustomIcon
+                      iconSrc={gitIcon}
+                      size="28px"
+                      link={image.github}
+                    />
+                  )}
+                  <CustomIcon
+                    iconSrc={linkIcon}
+                    size="28px"
+                    link={image.external}
+                  />
                 </ExtLinks>
                 <VideoOverlay pose={this.state.paused ? "visible" : "hidden"} />
                 <HeroVideo
