@@ -177,7 +177,7 @@ export default class ColorBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      paused: false
+      paused: true
     };
   }
 
@@ -199,13 +199,6 @@ export default class ColorBlock extends Component {
 
   handleEnded = () => {
     this.setState({ paused: true });
-  };
-
-  delayPlay = e => {
-    let player = e.target;
-    setTimeout(function() {
-      player.play();
-    }, 1650);
   };
 
   render() {
@@ -243,7 +236,6 @@ export default class ColorBlock extends Component {
                   preload="auto"
                   blured={this.state.paused}
                   onEnded={this.handleEnded}
-                  onCanPlay={this.delayPlay}
                   playsInline
                 >
                   <source type="video/webm" src={image.webm} />

@@ -124,7 +124,9 @@ class App extends Component {
   componentDidMount() {
     this.updateDimensions();
     this.setState({ isVisible: true });
-    window.addEventListener("resize", this.updateDimensions);
+    if (!this.state.mobile) {
+      window.addEventListener("resize", this.updateDimensions);
+    }
   }
 
   componentWillUnmount() {
