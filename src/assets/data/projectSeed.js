@@ -5,14 +5,18 @@ export default [
     image: require("../media/header_main_img.jpg")
   },
   {
-    text: "ROOKIE MEDIA",
+    text: "ROOKIE DIGITAL",
     helper: "LSTK; a digital marketing agency universal SPA",
-    image: require("../media/screen.png"),
+    image: {
+      webm: require("../media/rookie.webm"),
+      mp4: require("../media/rookie.mp4"),
+      external: "http://rookie-sandbox.surge.sh",
+      github: "https://github.com/DrugzZ/rookie"
+    },
     details: [
-      "Photoshop",
       "HTML5",
-      "CSS in JS (Styled Components)",
-      "JS (React)",
+      "Vanilla CSS",
+      "JavaScript (React)",
       "Webpack",
       "Google Firebase (Hosting and BaaS)"
     ]
@@ -20,7 +24,7 @@ export default [
   {
     text: "TKO Hydraulics",
     helper:
-      "LSTK; A small sales company's web business card, with a tiny CMS in the back for catalogue and news management.",
+      "LSTK; A small sales company's web business card, with a tiny CMS in the back for catalogue and news management. (2014)",
     image: {
       webm: require("../media/sealsru.webm"),
       mp4: require("../media/sealsru.mp4"),
@@ -33,7 +37,7 @@ export default [
       "CSS3 (Bootstrap)",
       "Gulp",
       "PHP Slim and SQLite",
-      "JS (latest at the time Angular 1.5)"
+      "JavaSscript (latest at the time Angular 1.5)"
     ]
   }
 ];

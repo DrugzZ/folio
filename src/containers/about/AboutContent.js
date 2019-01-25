@@ -6,4 +6,4 @@ const H = posed.h1({
   exit: { opacity: 0 }
 });
 
-export default () => <H>This is About page.</H>;
+export default () => <H>This is About page. Still not done :(</H>;
